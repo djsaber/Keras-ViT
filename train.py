@@ -9,52 +9,52 @@ from data import *
 from vit_keras import vit
 
 
-#---------------------------------ÉèÖÃ²ÎÊý-------------------------------------
+#---------------------------------è®¾ç½®å‚æ•°-------------------------------------
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
-CONFIG_B = {    # ViT-BÅäÖÃ
-    "hidden_dim":768,                              # patchÇ¶ÈëÎ¬¶È
-    "liner_dim":3072,                              # mlpÏßÐÔ±ä»»Î¬¶È
-    "atten_heads":12,                              # ×¢ÒâÁ¦Í·Êý
-    "encoder_depth":12,                            # ±àÂëÆ÷¶Ñµþ²ãÊý
+CONFIG_B = {    # ViT-Bé…ç½®
+    "hidden_dim":768,                              # patchåµŒå…¥ç»´åº¦
+    "liner_dim":3072,                              # mlpçº¿æ€§å˜æ¢ç»´åº¦
+    "atten_heads":12,                              # æ³¨æ„åŠ›å¤´æ•°
+    "encoder_depth":12,                            # ç¼–ç å™¨å †å å±‚æ•°
     }
 
-CONFIG_L = {    # ViT-LÅäÖÃ
+CONFIG_L = {    # ViT-Lé…ç½®
     "hidden_dim":1024,     
     "liner_dim":4096,            
     "atten_heads":16,      
     "encoder_depth":24,    
     }
 
-MODEL_CONFIG = CONFIG_B                            # ÅäÖÃÄ£ÐÍ¹æÄ£
-WEIGHT_CONFIG = "imagenet21k"                      # ÅäÖÃÔ¤ÑµÁ·È¨ÖØ
-                                                   #"imagenet21k"°üÀ¨pre_logits²ãÈ¨ÖØ£¬Àà±ðÊý£º21843£¬ÊäÈë³ß´çÎª224
-                                                   #"imagenet21k+imagenet2012" Ã»ÓÐpre_logits²ãÈ¨ÖØ£¬Àà±ðÊý£º1000£¬ÊäÈë³ß´çÎª384
+MODEL_CONFIG = CONFIG_B                            # é…ç½®æ¨¡åž‹è§„æ¨¡
+WEIGHT_CONFIG = "imagenet21k"                      # é…ç½®é¢„è®­ç»ƒæƒé‡
+                                                   #"imagenet21k"åŒ…æ‹¬pre_logitså±‚æƒé‡ï¼Œç±»åˆ«æ•°ï¼š21843ï¼Œè¾“å…¥å°ºå¯¸ä¸º224
+                                                   #"imagenet21k+imagenet2012" æ²¡æœ‰pre_logitså±‚æƒé‡ï¼Œç±»åˆ«æ•°ï¼š1000ï¼Œè¾“å…¥å°ºå¯¸ä¸º384
 
-IMAGE_SIZE = 224                                   # Í¼Æ¬´óÐ¡
-PATCH_SIZE = 32                                    # patch´óÐ¡
-NUM_CLASSES = 10                                   # Êä³öÀà±ð
-DROPOUT_RATE = 0.1                                 # dropout¸ÅÂÊ
-ACTIVATION = "softmax"                             # Êä³öÍ·¼¤»îº¯Êý
-PRE_LOGITS = True                                  # ÊÇ·ñ²åÈëpre_logits²ã
+IMAGE_SIZE = 224                                   # å›¾ç‰‡å¤§å°
+PATCH_SIZE = 32                                    # patchå¤§å°
+NUM_CLASSES = 10                                   # è¾“å‡ºç±»åˆ«
+DROPOUT_RATE = 0.1                                 # dropoutæ¦‚çŽ‡
+ACTIVATION = "softmax"                             # è¾“å‡ºå¤´æ¿€æ´»å‡½æ•°
+PRE_LOGITS = True                                  # æ˜¯å¦æ’å…¥pre_logitså±‚
 
-LABEL_SMOOTH = 0.1                                 # ±êÇ©Æ½»¬ÏµÊý
-LEARNING_RATE = 1e-5                               # ³õÊ¼Ñ§Ï°ÂÊ
-BATCH_SIZE = 32                                    # ÑµÁ·ºÍÑéÖ¤µÄÅú´óÐ¡
-EPOCHS = 100                                       # ÑµÁ·ÂÖÊý
-STEPS_PER_EPOCH = 40000//BATCH_SIZE                # Ã¿ÂÖÑµÁ·µÄbatchÊý
-VALIDATION_STEPS = 10000//BATCH_SIZE               # ÑéÖ¤µÄbatchÊý
+LABEL_SMOOTH = 0.1                                 # æ ‡ç­¾å¹³æ»‘ç³»æ•°
+LEARNING_RATE = 1e-3                               # åˆå§‹å­¦ä¹ çŽ‡
+BATCH_SIZE = 32                                    # è®­ç»ƒå’ŒéªŒè¯çš„æ‰¹å¤§å°
+EPOCHS = 100                                       # è®­ç»ƒè½®æ•°
+STEPS_PER_EPOCH = 40000//BATCH_SIZE                # æ¯è½®è®­ç»ƒçš„batchæ•°
+VALIDATION_STEPS = 10000//BATCH_SIZE               # éªŒè¯çš„batchæ•°
 #-----------------------------------------------------------------------------
 
 
-#---------------------------------ÉèÖÃÂ·¾¶-------------------------------------
+#---------------------------------è®¾ç½®è·¯å¾„-------------------------------------
 DATA_PATH = "datasets/cifar-10"
 SAVE_PATH = f"save_models/vit-{'b' if MODEL_CONFIG==CONFIG_B else 'l'}_{PATCH_SIZE}_{WEIGHT_CONFIG}.h5"
 PRE_TRAINED_PATH = f"pretrained/ViT-{'B' if MODEL_CONFIG==CONFIG_B else 'L'}_{PATCH_SIZE}_{WEIGHT_CONFIG}.npz"
 #-----------------------------------------------------------------------------
 
 
-#--------------------------------¼ÓÔØÊý¾Ý¼¯-------------------------------------
+#--------------------------------åŠ è½½æ•°æ®é›†-------------------------------------
 train_data_gen, valid_data_gen = cifar_10_data_gen(
     path = DATA_PATH, 
     batch_size = BATCH_SIZE, 
@@ -64,7 +64,7 @@ train_data_gen, valid_data_gen = cifar_10_data_gen(
 #-----------------------------------------------------------------------------
 
 
-#---------------------------------´î½¨Ä£ÐÍ-------------------------------------
+#---------------------------------æ­å»ºæ¨¡åž‹-------------------------------------
 vit = ViT(
     image_size = IMAGE_SIZE,
     patch_size = PATCH_SIZE,
@@ -75,7 +75,7 @@ vit = ViT(
     **MODEL_CONFIG
     )
 
-# ¼ÓÔØÔ¤ÑµÁ·È¨ÖØ
+# åŠ è½½é¢„è®­ç»ƒæƒé‡
 vit.load_pretrained_weights(PRE_TRAINED_PATH)
 
 vit.compile(
@@ -87,7 +87,7 @@ vit.summary()
 #-----------------------------------------------------------------------------
 
 
-#--------------------------------ÑµÁ·ºÍ±£´æ-------------------------------------
+#--------------------------------è®­ç»ƒå’Œä¿å­˜-------------------------------------
 best_loss, _ = vit.evaluate(valid_data_gen, steps=VALIDATION_STEPS)
 stop = 0
 for e in range(EPOCHS):
@@ -109,7 +109,7 @@ for e in range(EPOCHS):
         print(f"model saved")
     else:
         stop += 1
-        if stop >= 3:
+        if stop >= 5:
             print(f"early stop with eopch {e}")
             break
     lr = K.get_value(vit.optimizer.lr)
