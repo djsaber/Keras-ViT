@@ -1,8 +1,8 @@
-# Keras-ViT
+# keras-vit
 
-This is a package that implements the ViT model based on Keras. The ViT was proposed in the paper "[An image is worth 16x16 words: transformers for image recognition at scale](https://arxiv.org/pdf/2010.11929.pdf)". This package uses pre trained weights on the imagenet21K and imagenet2012 datasets, which are in. npz format.
+这个包是基于Keras框架的Vision Transformer（ViT）实现。 ViT模型由论文 "[An image is worth 16x16 words: transformers for image recognition at scale](https://arxiv.org/pdf/2010.11929.pdf)" 提出。这个包使用在imagenet21K数据集和imagenet21K+imagenet2012数据集上的预训练权重，它们是.npz格式的。
 
-## **◈ Preconditions**
+## **◈ 版本要求和安装**
 
 - Python >= 3.7
 
@@ -12,55 +12,55 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
   pip install keras-vit
   ```
 
-## **Q1: What can you do with this package？**
+## **Q1: 能用这个包干什么？**
 
-- Build a pre trained standard specification ViT model.
+- 构建标准架构的预训练VisionTransformer（ViT）模型
 
-- Customize and build any specification ViT model to suit your task.
+- 构建自定义参数的ViT模型以适用于不同任务
 
-## **Q2: How to build a pre trained ViT？**
+## **Q2: 如何构建预训练 ViT模型？**
 
-1. **Quickly build a pre trained ViTB16**
+1. **快速构建预训练 ViTB16**
    
    ```
    from keras_vit.vit import ViT_B16
    vit = ViT_B16()
    ```
    
-   > *The pre trained ViT has 4 configurations: ViT_B16, ViT_B32, ViT_L16 and ViT_L32.*
+   > *预训练ViT有四种配置 ：ViT_B16，ViT_B32，ViT_L16 和 ViT_L32*
    > 
-   > | config  | patch size | hiddem dim | mlp dim | attention heads | encoder depth |
-   > |:-------:|:----------:|:----------:|:-------:|:---------------:|:-------------:|
-   > | ViT_B16 | 16×16      | 768        | 3072    | 12              | 12            |
-   > | ViT_B32 | 32×32      | 768        | 3072    | 12              | 12            |
-   > | ViT_L16 | 16×16      | 1024       | 4096    | 16              | 24            |
-   > | ViT_L32 | 32×32      | 1024       | 4096    | 16              | 24            |
+   > | 配置        | patch size | hiddem dim | mlp dim | attention heads | encoder depth |
+   > |:---------:|:----------:|:----------:|:-------:|:---------------:|:-------------:|
+   > | *ViT_B16* | 16×16      | 768        | 3072    | 12              | 12            |
+   > | *ViT_B32* | 32×32      | 768        | 3072    | 12              | 12            |
+   > | *ViT_L16* | 16×16      | 1024       | 4096    | 16              | 24            |
+   > | *ViT_L32* | 32×32      | 1024       | 4096    | 16              | 24            |
    > 
-   > The "imagenet21k" and "imagenet21k+imagenet2012" are slightly different, as shown in the table below.
+   > *数据集 "imagenet21k" 和 "imagenet21k+imagenet2012" 的预训练权重对应的模型参数有些许不同，如下表所示：*
    > 
-   > | dataset                  | image size | classes | pre logits | known labels |
-   > |:------------------------:|:----------:|:-------:|:----------:|:------------:|
-   > | imagenet21k              | 224        | 21843   | True       | False        |
-   > | imagenet21k+imagenet2012 | 384        | 1000    | False      | True         |
+   > | weights                    | image size | classes | pre logits | known labels |
+   > |:--------------------------:|:----------:|:-------:|:----------:|:------------:|
+   > | *imagenet21k*              | 224        | 21843   | True       | False        |
+   > | *imagenet21k+imagenet2012* | 384        | 1000    | False      | True         |
 
-2. **Build ViTB16 with differernt pre trained weights.**
+2. **构建不同数据集下的预训练ViTB16**
    
    ```
    from keras_vit.vit import ViT_B16
    vit_1 = ViT_B16(weights = "imagenet21k")
    vit_2 = ViT_B16(weights="imagenet21k+imagenet2012")
    ```
+   
+   > *预训练权重（.npz）文件会自动下载到：C:\Users\user_name\\.Keras\weights路径下。如果在下载过程意外中断，需要该路径下的文件删除并重新下载。*
 
-3. **Build ViTB16 without pre trained weights**
+3. **构建未进行预训练的ViT6**
    
    ```
    from keras_vit.vit import ViT_B16
    vit = ViT_B16(pre_trained=False)
    ```
-   
-   > *The pre training weights file will be downloaded to C:\Users\user_name\\. Keras\weights when "pre_trained = True".*
 
-4. **Build pre trained ViTB32 with custom parameters**
+4. **自定义参数构建预训练的ViT32**
    
    ```
    from keras_vit.vit import ViT_B32
@@ -72,7 +72,7 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
        )
    ```
    
-   > *When you change some model parameters and some layers change, these layers will not load pre trained weights, the unchanged layers will still load pre trained weights. You can use loading_summary() to view specific information.*
+   > *当改变了预训练模型的参数，模型中某些层的参数会发生改变，这些层就不再读取预训练权重，而是随机初始化。对于未发生改变的层，预训练权重参数会正常加载到这些层中。可以通过* `loading_summary()`*方法查看每一层的加载信息。*
    
    ```
    vit.loading_summary()
@@ -117,9 +117,9 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
    =================================================================
    ```
 
-## **Q3: How to build a custom ViT？**
+## **Q3: 如何自定义构建ViT？**
 
-1. **Instantiating ViT classes to build custom ViT models**
+1. **通过实例化 ViT 类来构建自定义ViT模型**
    
    ```
    from keras_vit.vit import ViT
@@ -179,9 +179,9 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
    _________________________________________________________________==========================
    ```
    
-   > *It should be noted that "hidden_dim" should be divisible by "atten_heads". It is best to set "image_size" size that can be evenly divided by "patch_size".*
+   > *需要注意的是，*`hidden_dim`*参数需要能被* `atten_heads`*参数整除。*`image_size`*参数最好能被* `patch_size`*参数整除。*
 
-2. **Load pre trained weights for custom model**
+2. **将预训练权重加载到自定义ViT模型中**
    
    ```
    from keras_vit import utils, vit
@@ -220,9 +220,9 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
    =================================================================
    ```
 
-#### **Q4: Fine tuning or image classification on pre trained ViT ？**
+#### **Q4: 如何对预训练的ViT进行微调和直接用于图像分类 ？**
 
-1. Fine tuning pre trained ViT
+1. **微调**
    
    ```
    from keras_vit.vit import ViT_L16
@@ -264,7 +264,7 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
    vit.evaluate(x = test_generator, steps=...)
    ```
 
-2. **Applying  pre trained ViT for Image Classification**
+2. **图像分类**
    
    ```
    from keras_vit import vit
@@ -283,6 +283,8 @@ This is a package that implements the ViT model based on Keras. The ViT was prop
    print(classes[y[0].argmax()])
    ```
    
-   > *It should be noted that as there is currently no label for "imagenet21k", please use "imagenet21k+imagenet2012" when applying pre trained ViT. Both "imagenet21k" and "imagenet21k+imagenet2012" are available during the fine-tuning stage.*
+   > *需要注意的是，由于目前包中没有imagenet21k数据集的标签文件，因此在应用预先训练的ViT进行图像分类时，请设置* `“imagenet21-k+imagenet2012”`。
+   > 
+   > *若进行微调，则* `“imagenet21k”` *和* `“imagenet21k+imagenet2012”`*都可用。*
 
 # 
