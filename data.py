@@ -102,13 +102,12 @@ def cifar_10_data_gen(path, batch_size=32, data="train", resize=None, label_smoo
         labels = labels*(1-label_smooth) + (label_smooth/10)
  
     data_gen = ImageDataGenerator(
-        rotation_range=10,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-        shear_range=0.1,
-        zoom_range=0.1,
-        horizontal_flip=True,
-        vertical_flip=False,
+        rotation_range=10 if data == "train" else 0,
+        width_shift_range=0.1 if data == "train" else 0,
+        height_shift_range=0.1 if data == "train" else 0,
+        shear_range=0.1 if data == "train" else 0,
+        zoom_range=0.1 if data == "train" else 0,
+        horizontal_flip=True if data == "train" else False,
         validation_split=0.2 if data=="train" else 0, 
         )
     data_gen.fit(imgs)
