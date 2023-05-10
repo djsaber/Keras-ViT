@@ -51,7 +51,9 @@
    vit_2 = ViT_B16(weights="imagenet21k+imagenet2012")
    ```
    
-   > *预训练权重（.npz）文件会自动下载到：C:\Users\user_name\\.Keras\weights路径下。如果在下载过程意外中断，需要该路径下的文件删除并重新下载。*
+   > *预训练权重（.npz）文件会自动下载到：C:\Users\user_name\\.Keras\weights路径下。如果在下载过程意外中断，需要将该路径下的文件删除并重新下载，否则会报错。*
+   > 
+   > *若下载速度太慢，可手动下载（[百度网盘](https://pan.baidu.com/s/12dD74f4I2sELKbUVXaT3RA?pwd=52dl)），然后将文件放到上述路径中。*
 
 3. **构建未进行预训练的ViT6**
    
