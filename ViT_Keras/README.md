@@ -1,23 +1,33 @@
-# ViT_Keras
+# Keras-ViT
 
-This is a package that implements the ViT model based on Keras and Tensorflow. The ViT was proposed in the paper "[An image is worth 16x16 words: transformers for image recognition at scale](https://arxiv.org/pdf/2010.11929.pdf)". This package uses pre trained weights on the imagenet21K and imagenet2012 datasets, which are in. npz format.
+This is a package that implements the ViT model based on Keras. The ViT was proposed in the paper "[An image is worth 16x16 words: transformers for image recognition at scale](https://arxiv.org/pdf/2010.11929.pdf)". This package uses pre trained weights on the imagenet21K and imagenet2012 datasets, which are in. npz format.
 
-**Q1: What can you do with this package？**
+## **◈ Preconditions**
+
+- Python >= 3.7
+
+- Keras >= 2.9
+
+- ```
+  pip install keras-vit
+  ```
+
+## **Q1: What can you do with this package？**
 
 - Build a pre trained standard specification ViT model.
 
 - Customize and build any specification ViT model to suit your task.
 
-**Q2: How to build a pre trained ViT？**
+## **Q2: How to build a pre trained ViT？**
 
-1. Quickly build a pre trained ViTB16
+1. **Quickly build a pre trained ViTB16**
    
    ```
-   from ViT_Keras.vit import ViT_B16
+   from keras_vit.vit import ViT_B16
    vit = ViT_B16()
    ```
    
-   > The pre trained ViT has 4 configurations: ViT_B16, ViT_B32, ViT_L16 and ViT_L32.
+   > *The pre trained ViT has 4 configurations: ViT_B16, ViT_B32, ViT_L16 and ViT_L32.*
    > 
    > | config  | patch size | hiddem dim | mlp dim | attention heads | encoder depth |
    > |:-------:|:----------:|:----------:|:-------:|:---------------:|:-------------:|
@@ -33,27 +43,27 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
    > | imagenet21k              | 224        | 21843   | True       | False        |
    > | imagenet21k+imagenet2012 | 384        | 1000    | False      | True         |
 
-2. Build ViTB16 with differernt pre trained weights.
+2. **Build ViTB16 with differernt pre trained weights.**
    
    ```
-   from ViT_Keras.vit import ViT_B16
+   from keras_vit.vit import ViT_B16
    vit_1 = ViT_B16(weights = "imagenet21k")
    vit_2 = ViT_B16(weights="imagenet21k+imagenet2012")
    ```
 
-3. Build ViTB16 without pre trained weights
+3. **Build ViTB16 without pre trained weights**
    
    ```
-   from ViT_Keras.vit import ViT_B16
+   from keras_vit.vit import ViT_B16
    vit = ViT_B16(pre_trained=False)
    ```
    
-   > The pre training weights file will be downloaded to C:\Users\user_name\\. Keras\weights when "pre_trained = True".
+   > *The pre training weights file will be downloaded to C:\Users\user_name\\. Keras\weights when "pre_trained = True".*
 
-4. Build pre trained ViTB32 with custom parameters
+4. **Build pre trained ViTB32 with custom parameters**
    
    ```
-   from ViT_Keras.vit import ViT_B32
+   from keras_vit.vit import ViT_B32
    vit = ViT_B32(
        image_size = 128,
        num_classes = 12, 
@@ -62,7 +72,7 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
        )
    ```
    
-   > When you change some model parameters and some layers change, these layers will not load pre trained weights, the unchanged layers will still load pre trained weights. You can use loading_summary() to view specific information.
+   > *When you change some model parameters and some layers change, these layers will not load pre trained weights, the unchanged layers will still load pre trained weights. You can use loading_summary() to view specific information.*
    
    ```
    vit.loading_summary()
@@ -107,12 +117,12 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
    =================================================================
    ```
 
-**Q3: How to build a custom ViT？**
+## **Q3: How to build a custom ViT？**
 
-1. Instantiating ViT classes to build custom ViT models
+1. **Instantiating ViT classes to build custom ViT models**
    
    ```
-   from ViT_Keras.vit import ViT
+   from keras_vit.vit import ViT
    vit = ViT(
        image_size = 128,
        patch_size = 36,
@@ -169,14 +179,12 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
    _________________________________________________________________==========================
    ```
    
-   > It should be noted that "hidden_dim" should be divisible by "atten_heads".
-   > 
-   > It is best to set "image_size" size that can be evenly divided by "patch_size".
+   > *It should be noted that "hidden_dim" should be divisible by "atten_heads". It is best to set "image_size" size that can be evenly divided by "patch_size".*
 
-2. Load pre trained weights for custom model
+2. **Load pre trained weights for custom model**
    
    ```
-   from ViT_Keras import utils, vit
+   from keras_vit import utils, vit
    vit_custom = vit.ViT(
        image_size=128,
        patch_size=8,
@@ -212,12 +220,12 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
    =================================================================
    ```
 
-**Q4: Fine tuning or image classification on pre trained ViT ？**
+#### **Q4: Fine tuning or image classification on pre trained ViT ？**
 
 1. Fine tuning pre trained ViT
    
    ```
-   from ViT_Keras.vit import ViT_L16
+   from keras_vit.vit import ViT_L16
    
    # Set parameters
    IMAGE_SIZE = ...
@@ -256,11 +264,11 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
    vit.evaluate(x = test_generator, steps=...)
    ```
 
-2. Applying  pre trained ViT for Image Classification
+2. **Applying  pre trained ViT for Image Classification**
    
    ```
-   from ViT_Keras import vit
-   from ViT_Keras import utils
+   from keras_vit import vit
+   from keras_vit import utils
    
    # Get pre-trained vitb16
    vit_model = vit.ViT_B16(weights="imagenet21k+imagenet2012")
@@ -275,6 +283,6 @@ This is a package that implements the ViT model based on Keras and Tensorflow. T
    print(classes[y[0].argmax()])
    ```
    
-   > It should be noted that as there is currently no label for "imagenet21k", please use "imagenet21k+imagenet2012" when applying pre trained ViT. Both "imagenet21k" and "imagenet21k+imagenet2012" are available during the fine-tuning stage.
+   > *It should be noted that as there is currently no label for "imagenet21k", please use "imagenet21k+imagenet2012" when applying pre trained ViT. Both "imagenet21k" and "imagenet21k+imagenet2012" are available during the fine-tuning stage.*
 
 # 
