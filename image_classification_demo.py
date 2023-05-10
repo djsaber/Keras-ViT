@@ -1,5 +1,5 @@
-from ViT_Keras import vit
-from ViT_Keras import utils
+from keras_vit import vit
+from keras_vit import utils
 
 
 # get pre-trained vitb16
