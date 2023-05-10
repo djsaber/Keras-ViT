@@ -289,4 +289,4 @@
    > 
    > *若进行微调，则* `“imagenet21k”` *和* `“imagenet21k+imagenet2012”`*都可用。*
 
-# 
+项目中fine_tuning_on_CIFAR10_demo.py为在[cifar10数据集](https://pan.baidu.com/s/1-BCPxN57mtHh2OwQVJTOSA?pwd=52dl)上微调的脚本，运行前需要将数据集解压后放到datasets文件夹中。
